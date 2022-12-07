@@ -1,23 +1,29 @@
 from django.contrib import admin
-from .models import Etudiant, Professeur
+from .models import Chauffeur, Client, Livreur
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 # Register your models here.
 
 
-admin.site.unregister(User)
+# admin.site.unregister(User)
 
-class EtudiantInline(admin.StackedInline):
-    model = Etudiant
-    fk_name = 'user'
+# class ChauffeurInline(admin.StackedInline):
+#     model = Chauffeur
+#     fk_name = 'user'
 
-class ProfesseurInline(admin.StackedInline):
-    model = Professeur
-    fk_name = 'user'
+# class ClientInline(admin.StackedInline):
+#     model = Client
+#     fk_name = 'user'
+
+# class LivreurInline(admin.StackedInline):
+#     model = Livreur
+#     fk_name = 'user'
 
 
-class UserAdmin(UserAdmin):
-    inlines = [ EtudiantInline, ProfesseurInline]
+# class UserAdmin(UserAdmin):
+#     inlines = [ ChauffeurInline, ClientInline, LivreurInline,]
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(Chauffeur)
+admin.site.register(Livreur)
+admin.site.register(Client)

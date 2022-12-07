@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .resources import cars,partenaires
 # Create your models here.
 
 
 class Vehicule(models.Model):
-    type = models.CharField(max_length=50, choices=['v8','4x4'])
+    type = models.CharField(max_length=50, choices=cars.CARS)
     capacite = models.IntegerField(null=True,blank=True)
     nombre_places = models.IntegerField(null=True,blank=True)
 
@@ -18,6 +19,9 @@ class Chauffeur(models.Model):
     adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")
     email = models.CharField(max_length=100, null=True, blank=True, verbose_name="Email")
     vehicule = models.ForeignKey(Vehicule, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+      return f"{self.nom} {self.prenom}"
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -47,7 +51,7 @@ class Livreur(models.Model):
 
 class Partenaire(models.Model):
     nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s)")
-    type = models.CharField(max_length=50, choices=['Personne Physique','Personne Morale'])
+    type = models.CharField(max_length=50, choices=partenaires.PERSONNES)
     prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s)")
     date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
     telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
