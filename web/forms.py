@@ -1,25 +1,17 @@
+from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth.forms import User
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 
 
-# class EtdudiantForm(UserCreationForm):
-#     nom_etudiant = forms.CharField(max_length=25)
-#     class Meta(UserCreationForm.Meta):
-#         model = User
-#         fields = ['nom_etudiant','username', 'password1', 'password2']
-    
 class ChauffeurForm(UserCreationForm):
    nom = forms.CharField()
    prenom = forms.CharField()
-   date_naissance = forms.DateField()
+   date_naissance = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
    telephone = forms.CharField()
    adresse = forms.CharField()
-   email = forms.EmailField()
    
    class Meta(UserCreationForm.Meta):
       model = User
-      fields = ['nom','username', 'password1', 'password2']
-     
+      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse','email','password1', 'password2']
 

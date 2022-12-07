@@ -19,8 +19,7 @@ def register(request):
                prenom = form.cleaned_data['prenom'], 
                date_naissance = form.cleaned_data['date_naissance'], 
                telephone = form.cleaned_data['telephone'], 
-               adresse = form.cleaned_data['adresse'], 
-               email = form.cleaned_data['email'], 
+               adresse = form.cleaned_data['adresse'],
                user=user)
 
             login(request, user)
