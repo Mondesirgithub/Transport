@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacts{% endblock title %}
+
+{% block content %}
+		<!-- start breadcrumb -->
+        <section class="breadcrumb_main_area">
+            <!-- <div class="container-fluid"> -->
+            <div class="row">
+                <div class="breadcrumb_main nice_title content-center">
+                    <h3>Contact</h3>
+                    <img src="images/breadcrumb-nice-title-one.png" alt="">
+                </div>
+                <div class="breadcrumb_bg margin-top-70">
+                	<div class="container">
+                    	<div class="col-md-6 padding-left-0 col-sm-6 col-xs-6">
+							<h6>Keep in Touch</h6>
+                    	</div>
+                    	<div class="col-md-6 padding-right-0 col-sm-6 col-xs-6">
+		                    <ol class="breadcrumb floatright">
+		                    	<li><a href="#">Home</a></li>
+		                    	<li><a href="#">Contact</a></li>
+		                    </ol>
+                    	</div>
+                	</div>
+                </div>
+            </div>
+            <!-- </div>  -->
+        </section>
+        <!-- end breadcrunb -->
+		
+		
+		<!-- start other detect room section -->
+        <div class="contact_google_map_area">
+            <!-- <div class="container-fluid"> -->
+	            <div class="contact_google_map">
+	                <div id="contactgoogleMap" style="width:100%;height:591px;"></div>
+	            </div>
+            <!-- </div> -->
+        </div>
+        <!-- end other detect room section -->
+
+		<!-- Start Our Address Contact -->
+        <section class="our_address_contact section-padding light-whitesmoke-bg">
+        	<div class="container">
+        		<div class="row">
+	        		<div class="col-md-4 col-sm-4">
+	        			<div class="keep_in_touch">
+	        				<div class="section_title nice_title left">
+	        					<h4>Keep in Touch</h4>
+	        				</div>
+	        				<div class="section_content">
+	        					<p>
+	        						We finally got a piece of the pie. As long as we live its you and me baby. There ain't nothin' wrong with that love exciting and new come. Love life's sweetest reward Let it flow it floats back to you.  These Happy Days are yours and mine Happy Days. You wanna be where you can see our troubles are all the same.
+	        					</p>
+	        				</div>
+	        			</div>
+	        		</div>
+	        		<div class="col-md-4 col-sm-4">
+	        			<div class="our_branches">
+	        				<div class="section_title nice_title left">
+	        					<h4>Our Branches</h4>
+	        				</div>
+	        				<div class="section_content">
+	        					<ul>
+	        						<li><i class="fa fa-angle-double-right"></i>Sydney, Australia</li>
+	        						<li><i class="fa fa-angle-double-right"></i>Shinjuku, Tokyo, Japan</li>
+	        						<li><i class="fa fa-angle-double-right"></i>Los Angeles, CA, United States</li>
+	        						<li><i class="fa fa-angle-double-right"></i>Hwaseong-si, Gyeonggi-do, South Korea</li>
+	        					</ul>
+	        				</div>
+	        			</div>
+	        		</div>
+	        		<div class="col-md-4 col-sm-4">
+	        			<div class="quick_contact">
+	        				<div class="section_title nice_title left">
+	        					<h4>Quick Contact</h4>
+	        				</div>
+	        				<div class="section_content">
+	        					<div class="keep_quick">
+									<dl>
+										<dt>Office :</dt>
+										<dd>
+											+1 (987) 6543 20, +1 (234) 5678 09
+										</dd>
+									</dl>
+									<i><img src="images/quick-contact-one.png" alt=""></i>
+	        					</div>
+	        					<div class="keep_contact">
+									<dl>
+										<dt>Customer Service :</dt>
+										<dd>
+											1800 11 223 4567, 1800 99 887 6543
+										</dd>
+									</dl>
+									<i><img src="images/quick-contact-two.png" alt=""></i>
+	        					</div>
+	        				</div>
+	        			</div>
+	        		</div>
+        		</div>
+        	</div>
+        </section>
+		<!-- Start Our Address Contact -->
+
+
+		<!-- Start Leave Message Contact -->
+        <section class="leave_message section-padding">
+        	<div class="container">
+        		<div class="row">
+        			<div class="col-md-12">
+	        			<div class="section_title nice_title content-center">
+	    					<h4>Leave A Message</h4>
+	    					<p>
+	    						Town to town and up and down the dial said californey is the place
+	    					</p>
+	    				</div>
+        			</div>
+        		</div>
+				<div class="row">
+					<div class="section_content">
+						<form action="contact_process.php" method="post">
+							<div class="col-md-6 col-sm-6">
+								<input type="text" placeholder=" Name *" name="name" />
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" placeholder=" Email *" name="email" />
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" placeholder="Your Phone Number" name="phone" />
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" placeholder="Subject" />
+							</div>
+							<div class="col-md-12 col-sm-12">
+								<textarea name="message" id="message" cols="30" rows="10" placeholder="Message If Any"></textarea>
+							</div>
+							<div class="col-md-12 content-center margin-top-25 col-sm-12">
+								<input name="submit" type="submit" value="Submit" />
+							</div>
+						</form>
+					</div>
+				</div>
+        	</div>
+		</section>
+		<!-- End Leave Message Contact -->
+      
+{% endblock content %}

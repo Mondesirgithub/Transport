@@ -11,49 +11,55 @@ class Vehicule(models.Model):
 
 
 class Chauffeur(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s) du chauffeur")
-    prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s) du chauffeur")
-    date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
-    telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
-    adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")
-    email = models.CharField(max_length=100, null=True, blank=True, verbose_name="Email")
-    vehicule = models.ForeignKey(Vehicule, on_delete=models.CASCADE, null=True, blank=True)
+   user = models.OneToOneField(User, on_delete=models.CASCADE)
+   nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s) du chauffeur")
+   prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s) du chauffeur")
+   date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
+   telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
+   adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")
+   vehicule = models.ForeignKey(Vehicule, on_delete=models.CASCADE, null=True, blank=True)
 
-    def __str__(self):
+   def __str__(self):
       return f"{self.nom} {self.prenom}"
 
 class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s) du Client")
-    prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s) du Client")
-    date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
-    telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
-    adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")    
-    email = models.CharField(max_length=100, null=True, blank=True, verbose_name="Email")
-    chauffeur = models.ManyToManyField(Chauffeur)
+   user = models.OneToOneField(User, on_delete=models.CASCADE)
+   nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s) du Client")
+   prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s) du Client")
+   date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
+   telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
+   adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse") 
+   chauffeur = models.ManyToManyField(Chauffeur)
+
+   def __str__(self):
+      return f"{self.nom} {self.prenom}"
 
 
 class Commentaire(models.Model):
-    nom_personne = models.CharField(max_length=50, blank=True, null=True)
-    contenu = models.TextField(blank=True, null=True)
-    date_publication = models.DateTimeField(auto_now=True, null=True)
+   nom_personne = models.CharField(max_length=50, blank=True, null=True)
+   contenu = models.TextField(blank=True, null=True)
+   date_publication = models.DateTimeField(auto_now=True, null=True)
 
 class Livreur(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)    
-    nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s) du Livreur")
-    prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s) du Livreur")
-    date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
-    telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
-    adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")    
-    email = models.CharField(max_length=100, null=True, blank=True, verbose_name="Email")
-    client = models.ManyToManyField(Client)
+   user = models.OneToOneField(User, on_delete=models.CASCADE)    
+   nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s) du Livreur")
+   prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s) du Livreur")
+   date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
+   telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
+   adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")
+   client = models.ManyToManyField(Client)
+
+   def __str__(self):
+      return f"{self.nom} {self.prenom}"
 
 class Partenaire(models.Model):
-    nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s)")
-    type = models.CharField(max_length=50, choices=partenaires.PERSONNES)
-    prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s)")
-    date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
-    telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
-    adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")    
-    email = models.CharField(max_length=100, null=True, blank=True, verbose_name="Email")
+   nom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Nom(s)")
+   type = models.CharField(max_length=50, choices=partenaires.PERSONNES)
+   prenom = models.CharField(max_length=20, null=True, blank=True, verbose_name="Prénom(s)")
+   date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
+   telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
+   adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")    
+   email = models.CharField(max_length=100, null=True, blank=True, verbose_name="Email")
+
+   def __str__(self):
+      return f"{self.nom} {self.prenom}"

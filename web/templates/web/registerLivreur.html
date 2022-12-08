@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Register Livreur{% endblock title %}
+
+{% block content %}
+<section class="get_quote_area content-left">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-6">
+            <div class="section_title nice_title_white_left">
+               <h4>Get A Quote</h4>
+               <p>
+                  Globally incubate standards compliant channels before scalable benefits.
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="section_content">
+            <div class="col-md-12">
+               <div class="row">
+                  <form action="{% url 'registerLivreur' %}" method="POST">
+                     {% csrf_token %}
+                     {% for field in form %}
+                        <div class="form-group col-md-6 col-sm-6">
+                           <div class="input-group">
+                              <label for="{{field.name}}">{{field.label}}</label>
+                              {{field}}
+                              {%for error in field.errors %}
+                                 <span style="color: red;">{{error}}</span><br />
+                              {%endfor%}
+                           </div>
+                        </div>
+                     {% endfor %}
+                        
+                     <div class="form-group submit col-md-3 col-sm-3">
+                        <input class="btn" type="submit" value="Submit">
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock content %}
