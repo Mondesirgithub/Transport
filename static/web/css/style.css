@@ -385,6 +385,8 @@ CSS INDEX
 }
 .get_quote_area .form-group select {
   width: 100%;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   margin-bottom: 17px;
   height: 43px;
   font-family: "Open Sans",sans-serif;
