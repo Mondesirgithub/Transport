@@ -73,7 +73,7 @@
 						<div class="header_logo clearfix">
 							<div class="col-md-5 col-sm-3">
 								<div class="site_logo">
-									<a href="index.html"><img src="{% static 'web/images/site-logo-one.png' %}" alt="site logo"></a>
+									<a href="{% url 'index' %}"><img src="{% static 'web/images/site-logo-one.png' %}" alt="site logo"></a>
 								</div>
 							</div>
 							<div class="col-md-7 col-sm-9">
@@ -131,13 +131,14 @@
 
 				                <!-- Collect the nav links, forms, and other content for toggling -->
 				                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				                  
-                              <ul class="nav navbar-nav">
-				                    <li><a href="about-us.html">About us</a></li>
-				                    <li><a href="services.html">Services</a></li>
-				                    <li><a href="blog.html">Blog</a></li>
-				                    <li><a href="faq.html">Faq</a></li>
-                                <li role="presentation" class="dropdown">
+
+                           <ul class="nav navbar-nav">
+                              <li><a href="about-us.html">About us</a></li>
+                              <li><a href="services.html">Services</a></li>
+                              <li><a href="blog.html">Blog</a></li>
+                              <li><a href="faq.html">Faq</a></li>
+                              {% if user.is_authenticated == False %}
+                              <li role="presentation" class="dropdown">
                                  <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
                                  Register
                                  </a>
@@ -146,19 +147,50 @@
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'registerLivreur' %}">Livreur</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'registerClient' %}">Client</a></li>
                                  </ul>
-                             </li>
+                              </li>
                              <li role="presentation" class="dropdown">
                                  <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
                                  Login
                                  </a>
                                  <ul id="menu1" class="dropdown-menu" role="menu">
-                                    {% comment %} <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'loginChauffeur' %}">Chauffeur</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'loginChauffeur' %}">Chauffeur</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'loginLivreur' %}">Livreur</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'loginClient' %}">Client</a></li> {% endcomment %}
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'loginClient' %}">Client</a></li>
                                  </ul>
-                             </li>
-				                    <li><a href="{% url 'contact' %}">Contact</a></li>
-				                  </ul>
+                             </li>  
+                              {% endif %}
+                              
+                             <li></li>
+                             {% if user.is_authenticated %}
+                              <li role="presentation" class="dropdown">
+                                 <a id="drop1" href="#" class="dropdown-toggle" style="background-color: #1874C1;" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                                    {% if request.session.statusChauffeur == 1 %}
+                                    {{request.session.prenom_chauffeur}} {{request.session.nom_chauffeur}}<span style="color: #252b3f;"> - Chauffeur</span>
+                                    {% endif %}
+                                    {% if request.session.statusLivreur == 1 %}
+                                    {{request.session.prenom_livreur}} {{request.session.nom_livreur}}<span style="color: #252b3f;"> - Livreur</span>
+                                    {% endif %}
+                                    {% if request.session.statusClient == 1 %}
+                                    {{request.session.prenom_client}} {{request.session.nom_client}}<span style="color: #252b3f;"> - Client</span>
+                                    {% endif %}
+                                 </a>
+                                 <ul id="menu1" class="dropdown-menu" role="menu">
+                                    {% if request.session.statusChauffeur == 1 %}
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'editChauffeur' %}">Voir mon profil</a></li>
+                                    {% endif %}
+                                    {% if request.session.statusLivreur == 1 %}
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'editLivreur' %}">Voir mon profil</a></li>
+                                    {% endif %}
+                                    {% if request.session.statusClient == 1 %}
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'editClient' %}">Voir mon profil</a></li>
+                                    {% endif %}
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'logout' %}">Logout</a></li>
+                                 </ul>
+                              </li>
+                              {% else %}
+                              <li></li>
+                             {% endif %}
+                              </ul>
 
 				                </div><!-- /.navbar-collapse -->
 				            </nav>
@@ -215,7 +247,7 @@
 										<p>
 											Objectively innovate empowered manufactured
 										</p>
-										<form action="index.html" class="subscribe_form">
+										<form action="{% url 'index' %}" class="subscribe_form">
 	                                        <input type="text" placeholder="Email Address">
 	                                    </form>
 	                                    <span>

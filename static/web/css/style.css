@@ -373,7 +373,7 @@ CSS INDEX
 ===============================================*/
 
 .get_quote_area {
-  background: rgba(0, 0, 0, 0.9);
+  background: #252b3f;
   color: #fff;
   padding: 90px 0;
 }
@@ -2447,7 +2447,7 @@ body#home_two .transport_features .section-content ul li img {
   min-height: 850px;
 }
 .get_quote_area {
-  background: #000;
+  background: #252b3f;
 }
 /*start about-us on parking*/
 .single_on_parking {
@@ -2518,7 +2518,7 @@ body#services_page .get_quote_area{
   text-indent: 4px;
 }
 .get_quote_area {
-  background: #000;
+  background: #252b3f;
 }
 .error_mail input[type="submit"] {
   padding: 12px 6px;

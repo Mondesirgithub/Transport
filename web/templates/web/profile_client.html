@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Login Client{% endblock title %}
+{% block title %}Profil Client{% endblock title %}
 
 {% block content %}
-
 <section class="get_quote_area content-left">
    <div class="container">
       <div class="row">
          <div class="col-md-6">
             <div class="section_title nice_title_white_left">
-               <h4>Connexion des Clients</h4>
+               <h4>Votre profil</h4>
                <p>
                   Globally incubate standards compliant channels before scalable benefits.
                </p>
@@ -20,7 +19,7 @@
          <div class="section_content">
             <div class="col-md-12">
                <div class="row">
-                  <form action="{% url 'loginClient' %}" method="POST">
+                  <form action="{% url 'editClient' %}" method="POST">
                      {% csrf_token %}
                      {% for field in form %}
                         <div class="form-group col-md-6 col-sm-6">
@@ -33,16 +32,19 @@
                            </div>
                         </div>
                      {% endfor %}
-                     <div style="margin : 18px">
-                        <span style="color: red;">{{message}}</span><br />   
-                     </div>
-                     <div class="form-group submit col-md-3 col-sm-3">
-                        <input class="btn" type="submit" value="Se connecter">
-                        <div class="section_title nice_title_white_left" style="margin-top:30px;">
-                           <p>
-                              Pas encore de compte ? <a style="color: #1874C1;margin-left: 10px;" href="{% url 'registerClient' %}">Inscription</a>
-                           </p>
+                     {% for field in form2 %}
+                        <div class="form-group col-md-6 col-sm-6">
+                           <div class="input-group">
+                              <label for="{{field.name}}">{{field.label}}</label>
+                              {{field}}
+                              {%for error in field.errors %}
+                                 <span style="color: red;">{{error}}</span><br />
+                              {%endfor%}
+                           </div>
                         </div>
+                     {% endfor %}
+                     <div class="form-group submit col-md-3 col-sm-3">
+                        <input class="btn" type="submit" value="Sauvegarder les modifications">
                      </div>
                   </form>
                </div>
@@ -51,5 +53,4 @@
       </div>
    </div>
 </section>
-
 {% endblock content %}
