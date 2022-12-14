@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}DONNEES FINANCIERES{% endblock title %}
+
+{% block content %}
+
+
+		<!-- start breadcrumb -->
+      <section class="breadcrumb_main_area">
+         <!-- <div class="container-fluid"> -->
+             <div class="row">
+                 <div class="breadcrumb_main nice_title content-center">
+                     <h3>DONNEES FINANCIERES</h3>
+                     <img src="{% static 'web/images/breadcrumb-nice-title-one.png' %}" alt="">
+                 </div>
+                 <div class="breadcrumb_bg margin-top-70">
+                    <div class="container">
+                       <div class="col-md-6 padding-left-0 col-sm-6 col-xs-6">
+                     <h6>Services</h6>
+                       </div>
+                       <div class="col-md-6 padding-right-0 col-sm-6 col-xs-6">
+                          <ol class="breadcrumb floatright">
+                             <li><a href="#">Home</a></li>
+                             <li><a href="#">Services</a></li>
+                          </ol>
+                       </div>
+                    </div>
+                 </div>
+             </div>
+         <!-- </div>  -->
+     </section>
+     <!-- end breadcrunb -->
+
+
+   <!-- start Industry Support area -->
+   <section class="industry_support_area section-padding">
+      <div class="container">
+         <div class="row" style="overflow: auto;">
+            <table class="table">
+               <thead class="thead-dark">
+                 <tr>
+                   <th scope="col">Dates</th>
+                   <th scope="col">Montant de la transaction</th>
+                   <th scope="col">Type de véhicule utilisé</th>
+                   <th scope="col">Numéro matricule de la voiture</th>
+                   <th scope="col">Lieu de délogement ou livraison</th>
+                   <th scope="col">Coordonnées su client</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr>
+                   <td>Mark</td>
+                   <td>Otto</td>
+                   <td>@mdo</td>
+                   <td>@mdo</td>
+                   <td>@mdo</td>
+                   <td>@mdo</td>
+                 </tr>
+                 <tr>
+                   <td>Jacob</td>
+                   <td>Thornton</td>
+                   <td>@fat</td>
+                   <td>@fat</td>
+                   <td>@fat</td>
+                   <td>@fat</td>
+                 </tr>
+                 <tr>
+                   <td>Larry</td>
+                   <td>the Bird</td>
+                   <td>@twitter</td>
+                   <td>@twitter</td>
+                   <td>@twitter</td>
+                   <td>@twitter</td>
+                 </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </section>
+   <!-- End Industry Support area -->
+
+   <!-- start Ultimate Performance area -->
+   <section class="performance_area section-padding content-center">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+               <div class="section_title nice_title">
+                  <h4>The Ultimate Performance</h4>
+                  <p>
+                     Town to town and up and down the dial said californey is the place
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="section_content clearfix">
+               <div class="col-md-3 col-sm-6">
+                  <div class="single_perform">
+                     <img src="{% static 'web/images/worldwide-delivery-two.png' %}" alt="">
+                     <h5>Worldwide Delivery</h5>
+                     <p>
+                        Quickly maximize timely deliverables for real-time schemas. Dramatically maintain Dramatically maintain
+                     </p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6">
+                  <div class="single_perform">
+                     <img src="{% static 'web/images/logistic-solution-three.png' %}" alt="">
+                     <h5>Logistics Solutions</h5>
+                     <p>
+                        Completely synergize resource sucking relationships well premier niche markets Professionally
+                     </p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6">
+                  <div class="single_perform">
+                     <img src="{% static 'web/images/supply-chain-three.png' %}" alt="">
+                     <h5>Supply Chain</h5>
+                     <p>
+                        Objectively innovate empowered manufactured products whereas parallel platforms. Holisticly
+                     </p>
+                  </div>
+               </div>
+               <div class="col-md-3 col-sm-6">
+                  <div class="single_perform">
+                     <img src="{% static 'web/images/oil-gas-logistic-three.jpg' %}" alt="">
+                     <h5>Oil & Gas Logistics</h5>
+                     <p>
+                        Proactively envisioned multimedia based expertise and cross-media growth strategies. Seamlessly
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- End Ultimate Performance area -->
+{% endblock content %}

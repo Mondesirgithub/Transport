@@ -19,7 +19,7 @@
          <div class="section_content">
             <div class="col-md-12">
                <div class="row">
-                  <form action="{% url 'editChauffeur' %}" method="POST">
+                  <form action="{% url 'editChauffeur' %}" method="POST" enctype="multipart/form-data">
                      {% csrf_token %}
                      {% for field in form %}
                         <div class="form-group col-md-6 col-sm-6">

@@ -14,4 +14,7 @@ urlpatterns = [
     path('login-client/', views.loginClient, name='loginClient'),
     path('logout/', views.logoutUser, name='logout'),
     path('contact/', views.contact, name='contact'),
+    path('faq/', views.faq, name='faq'),
+    path('about/', views.about, name='about'),
+    path('donneesFinancieres/', views.donneesFinancieres, name='donneesFinancieres'),
 ]

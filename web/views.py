@@ -14,6 +14,16 @@ def index(request):
 def contact(request):
    return render(request, "web/contact.html")
 
+def about(request):
+   return render(request, "web/about-us.html")
+
+def faq(request):
+   return render(request, "web/faq.html")
+
+
+def donneesFinancieres(request):
+   return render(request, "web/donneesFinancieres.html")
+
 def logoutUser(request):
    logout(request)
    return redirect('index')
@@ -21,10 +31,11 @@ def logoutUser(request):
 
 def registerChauffeur(request):
       form = ChauffeurRegisterForm()
-      chauffeur = False
 
       if request.method == 'POST':
-         form = ChauffeurRegisterForm(request.POST)      
+         form = ChauffeurRegisterForm(request.POST, request.FILES)      
+         print(request.POST)
+         print(request.FILES)
          if form.is_valid():
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
@@ -35,7 +46,9 @@ def registerChauffeur(request):
                date_naissance = form.cleaned_data['date_naissance'], 
                telephone = form.cleaned_data['telephone'], 
                adresse = form.cleaned_data['adresse'],
+               piece_jointe = form.cleaned_data['piece_jointe'],
                user=user)
+
 
             request.session['nom_chauffeur'] =  chauffeur.nom
             request.session['prenom_chauffeur'] =  chauffeur.prenom
@@ -56,7 +69,7 @@ def registerLivreur(request):
       form = LivreurRegisterForm()
 
       if request.method == 'POST':
-         form = LivreurRegisterForm(request.POST)      
+         form = LivreurRegisterForm(request.POST, request.FILES)      
          if form.is_valid():
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
@@ -67,6 +80,7 @@ def registerLivreur(request):
                date_naissance = form.cleaned_data['date_naissance'], 
                telephone = form.cleaned_data['telephone'], 
                adresse = form.cleaned_data['adresse'],
+               piece_jointe = form.cleaned_data['piece_jointe'],
                user=user)
 
             request.session['nom_livreur'] =  livreur.nom
@@ -202,6 +216,7 @@ def loginClient(request):
       return render(request, 'web/loginClient.html', context)
 
 
+#----------------Edit-----------------
 
 def editChauffeur(request):
     user = request.user
@@ -210,7 +225,7 @@ def editChauffeur(request):
     form2 = ChauffeurProfilForm(instance=user)
 
     if request.method == "POST":
-        form = ChauffeurUpdateForm(request.POST, instance = chauffeur)
+        form = ChauffeurUpdateForm(request.POST,request.FILES, instance = chauffeur)
         form2 = ChauffeurProfilForm(request.POST, instance = user)
         if form.is_valid() and form2.is_valid():
             user = form2.save(commit=False)
@@ -237,7 +252,7 @@ def editLivreur(request):
     form2 = LivreurProfilForm(instance=user)
 
     if request.method == "POST":
-        form = LivreurUpdateForm(request.POST, instance = livreur)
+        form = LivreurUpdateForm(request.POST,request.FILES, instance = livreur)
         form2 = LivreurProfilForm(request.POST, instance = user)
         if form.is_valid() and form2.is_valid():
             user = form2.save(commit=False)
@@ -254,6 +269,7 @@ def editLivreur(request):
       'form':form,
       'form2':form2
       }
+      
     return render(request, 'web/profile_livreur.html', context)
 
    

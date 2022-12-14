@@ -133,10 +133,10 @@
 				                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                            <ul class="nav navbar-nav">
-                              <li><a href="about-us.html">About us</a></li>
-                              <li><a href="services.html">Services</a></li>
+                              <li><a href="{% url 'about' %}">A propos de nous</a></li>
+                              <li><a href="{% url 'donneesFinancieres' %}">Donnees financieres</a></li>
                               <li><a href="blog.html">Blog</a></li>
-                              <li><a href="faq.html">Faq</a></li>
+                              <li><a href="{% url 'faq' %}">Faq</a></li>
                               {% if user.is_authenticated == False %}
                               <li role="presentation" class="dropdown">
                                  <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
@@ -312,7 +312,7 @@
 										<li>
 											installed base portals after maintainable products. Proactively envisioned multimedia based expertise and cross-media
 										</li>
-										<li><a href="#">Read More <i class="fa fa-caret-right"></i></a></li>
+										<li><a href="{% url 'about' %}">Read More <i class="fa fa-caret-right"></i></a></li>
 									</ul>
 								</div>
 							</div>
@@ -361,7 +361,7 @@
 								<nav>
 									<ul>
 										<li><a href="#">Home</a></li>
-										<li><a href="#">About Us</a></li>
+										<li><a href="# ">About Us</a></li>
 										<li><a href="#">Services</a></li>
 										<li><a href="#">On Parking</a></li>
 										<li><a href="#">Contact Us</a></li>

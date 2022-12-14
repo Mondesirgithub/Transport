@@ -9,10 +9,11 @@ class ChauffeurRegisterForm(UserCreationForm):
    date_naissance = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
    telephone = forms.CharField()
    adresse = forms.CharField()
+   piece_jointe = forms.FileField()
    
    class Meta(UserCreationForm.Meta):
       model = User
-      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse','email','password1', 'password2']
+      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse','email','password1', 'password2','piece_jointe']
 
 
 class LivreurRegisterForm(UserCreationForm):
@@ -21,10 +22,11 @@ class LivreurRegisterForm(UserCreationForm):
    date_naissance = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
    telephone = forms.CharField()
    adresse = forms.CharField()
+   piece_jointe = forms.FileField()
    
    class Meta(UserCreationForm.Meta):
       model = User
-      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse','email','password1', 'password2']
+      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse','email','password1', 'password2','piece_jointe']
 
 class ClientRegisterForm(UserCreationForm):
    nom = forms.CharField()
@@ -51,10 +53,12 @@ class ChauffeurUpdateForm(forms.ModelForm):
    date_naissance = forms.DateField(widget=forms.DateInput())
    telephone = forms.CharField()
    adresse = forms.CharField()
+   piece_jointe = forms.FileField()
 
    class Meta:
       model = User
-      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse']
+      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse','piece_jointe']
+
 
 class ChauffeurProfilForm(forms.ModelForm):
    class Meta:
@@ -68,10 +72,11 @@ class LivreurUpdateForm(forms.ModelForm):
    date_naissance = forms.DateField(widget=forms.DateInput())
    telephone = forms.CharField()
    adresse = forms.CharField()
+   piece_jointe = forms.FileField()
 
    class Meta:
       model = User
-      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse']
+      fields = ['nom','prenom', 'date_naissance', 'telephone', 'adresse','piece_jointe']
 
 class LivreurProfilForm(forms.ModelForm):
    class Meta:
