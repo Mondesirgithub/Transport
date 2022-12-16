@@ -11,6 +11,10 @@ from web.forms import (ChauffeurRegisterForm,LivreurRegisterForm,
 def index(request):
    return render(request, "web/index.html")
 
+
+def map(request):
+   return render(request, "web/map.html")
+
 def contact(request):
    return render(request, "web/contact.html")
 
