@@ -18,9 +18,12 @@ urlpatterns = [
     path('faq/', views.faq, name='faq'),
     path('about/', views.about, name='about'),
     path('getDataChauffeur/<int:pk>', views.getDataChauffeur, name='getDataChauffeur'),
+    path('getDataLivreur/<int:pk>', views.getDataLivreur, name='getDataLivreur'),
+    path('getDataClient/<int:pk>', views.getDataClient, name='getDataClient'),
     path('donneesFinancieres/', views.donneesFinancieres, name='donneesFinancieres'),
    path('map/', views.map, name='map'),
    path('map_suivi_users/', views.map_suivi_users, name='map_suivi_users'),
    path('suivi_user_chauffeur/<int:pk>', views.suivi_user_chauffeur, name='suivi_user_chauffeur'),
    path('suivi_user_livreur/<int:pk>', views.suivi_user_livreur, name='suivi_user_livreur'),
+   path('suivi_user_client/<int:pk>', views.suivi_user_client, name='suivi_user_client'),
 ]

@@ -28,15 +28,14 @@
       <!-- <div class="container-fluid"> -->
       <div class="row">
             <div class="breadcrumb_main nice_title content-center">
-               <h3>Map</h3>
+               <h3>Suivre mes propres déplacements</h3>
                <img src="{% static 'web/images/breadcrumb-nice-title-one.png' %}" alt="">
             </div>
             <div class="breadcrumb_bg margin-top-70">
                <div class="container">
                   <div class="col-md-6 padding-right-0 col-sm-6">
                      <ol class="breadcrumb floatright">
-                        <li><a href="{% url 'map_suivi_users' %}">Suivre un chauffeur ou livreur</a></li>
-                        <li><a href="{% url 'map' %}">Suivre mes propes déplacements</a></li>
+                        <li><a href="{% url 'map_suivi_users' %}">Suivre un chauffeur, un livreur ou un client</a></li>
                      </ol>
                   </div>
                </div>
@@ -65,7 +64,7 @@
    $(document).ready(function(){
       $("form").hide()
     // Map initialization 
-    let map = L.map('map').setView([14.0860746, 100.608406], 1);
+    let map = L.map('map').setView([14.0860746, 100.608406], 13);
 
     let reponse = confirm("Voulez que d'autres personnes vous voient ? Ok pour oui // Annuler pour non ")
 
@@ -78,18 +77,18 @@
     if(!navigator.geolocation) {
         console.log("Your browser doesn't support geolocation feature!")
     } else {
-         let marker, circle;
-         let compteur = 0;
+         let marker, circle, marker2;
         setInterval(() => {
             navigator.geolocation.getCurrentPosition(position => {
                let {latitude, longitude, accuracy} = position.coords
 
                if(reponse){
-                  document.getElementById('latitude').value = compteur
-                  document.getElementById('longitude').value = compteur
+                  document.getElementById('latitude').value = latitude
+                  document.getElementById('longitude').value = longitude
+               }else{
+                  document.getElementById('latitude').value = 0.0
+                  document.getElementById('longitude').value = 0.0
                }
-
-               compteur = compteur + 1
 
                if(latitude !== '' && longitude !== '')
                {
@@ -109,20 +108,25 @@
                      }
                   })
                }
+               
 
                if(marker) {
                    map.removeLayer(marker)
                }
+               
        
                if(circle) {
                    map.removeLayer(circle)
                }
-       
+               
                marker = L.marker([latitude, longitude])
+
                circle = L.circle([latitude, longitude], {radius: accuracy})
-       
-               let featureGroup = L.featureGroup([marker, circle]).addTo(map)
-       
+
+               
+               let featureGroup = L.featureGroup([marker, marker2]).addTo(map)
+               
+               
                map.fitBounds(featureGroup.getBounds())
                
             })

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Map - chauffeur{% endblock title %}
+{% block title %}Map - client{% endblock title %}
 
 {% block link %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
@@ -28,7 +28,7 @@
       <!-- <div class="container-fluid"> -->
       <div class="row">
             <div class="breadcrumb_main nice_title content-center">
-               <h3>Suivi du chauffeur <b>{{chauffeur.nom}} {{chauffeur.prenom}}</b></h3>
+               <h3>Suivi du client <b>{{client.nom}} {{client.prenom}}</b></h3>
                <img src="{% static 'web/images/breadcrumb-nice-title-one.png' %}" alt="">
             </div>
             <div class="breadcrumb_bg margin-top-70">
@@ -48,7 +48,9 @@
 
 <!-- Starting Query Accordion Area -->
 <section class="query_accordion_area" id="formulaire">
+
    <div id="map"></div>
+   
 </section>
 <!-- End Query Accordion Area -->
 {% endblock content %}
@@ -58,47 +60,42 @@
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 <script>
    $(document).ready(function(){
-    let val1 = parseFloat('{{chauffeur.latitude}}'.replace(',','.'));
-    let val2 = parseFloat('{{chauffeur.longitude}}'.replace(',','.'));
-    let pk = parseInt('{{chauffeur.pk}}')
-
+      $("form").hide()
     // Map initialization 
-    let map = L.map('map').setView([ val1 , val2], 6);
+    let map = L.map('map').setView([14.0860746, 100.608406], 1);
+
+    //let reponse = confirm("Voulez que d'autres personnes vous voient ? ")
 
     //osm layer
     let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         //attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
     osm.addTo(map);
-
       let marker;
-      
       setInterval(() => {
-            $.ajax({
-               type: 'GET',
-               url: "{% url 'getDataChauffeur' chauffeur.pk %}",
-               success: function(response){
-                  let latitude = response.chauffeur[0].latitude
-                  let longitude = response.chauffeur[0].longitude   
-                  
-                  console.log(latitude , longitude)
-                  
-                  if(marker) {
-                     map.removeLayer(marker)
-                  }
-   
-                  marker = L.marker([latitude, longitude])
-            
-                  let featureGroup = L.featureGroup([marker]).addTo(map)
-            
-                  map.fitBounds(featureGroup.getBounds())
-      
-               },
-               error: function(response){
-                  console.log('Erreur ' , response)
+         $.ajax({
+            type: 'GET',
+            url: "{% url 'getDataClient' client.pk %}",
+            success: function(response){
+               let latitude = response.client[0].latitude
+               let longitude = response.client[0].longitude   
+               
+               if(marker) {
+                  map.removeLayer(marker)
                }
-            })
-         }, 500);
-    })
+
+               marker = L.marker([latitude, longitude])
+         
+               let featureGroup = L.featureGroup([marker]).addTo(map)
+         
+               map.fitBounds(featureGroup.getBounds())
+   
+            },
+            error: function(response){
+               console.log('Erreur ' , response)
+            }
+         })
+      }, 500);
+   })
 </script>
 {% endblock script %}

@@ -39,19 +39,20 @@ def map(request):
             except:
                pass
    
-
    return render(request, "web/map.html")
 
 @login_required
 def map_suivi_users(request):
    livreurs = Livreur.objects.filter(longitude__gt=0.0).exclude(latitude=0.0, longitude=0.0)
    chauffeurs = Chauffeur.objects.filter(longitude__gt=0.0).exclude(latitude=0.0, longitude=0.0)
+   clients = Client.objects.filter(longitude__gt=0.0).exclude(latitude=0.0, longitude=0.0)
    
    print(livreurs)
    
    context = {
       'livreurs':livreurs,
-      'chauffeurs':chauffeurs
+      'chauffeurs':chauffeurs,
+      'clients':clients
    }
 
    return render(request , 'web/map_suivi_users.html', context)
@@ -75,9 +76,26 @@ def suivi_user_livreur(request, pk):
    return render(request , 'web/suivi_user_livreur.html', context)
 
 
+@login_required
+def suivi_user_client(request, pk):   
+   client = Client.objects.get(pk=pk)
+   context = {
+      'client':client
+   }
+   return render(request , 'web/suivi_user_client.html', context)
+
+
 def getDataChauffeur(request, pk):
    chauffeur = Chauffeur.objects.filter(pk=pk)
    return JsonResponse({'chauffeur': list(chauffeur.values())})
+
+def getDataLivreur(request, pk):
+   livreur = Livreur.objects.filter(pk=pk)
+   return JsonResponse({'livreur': list(livreur.values())})
+
+def getDataClient(request, pk):
+   client = Client.objects.filter(pk=pk)
+   return JsonResponse({'client': list(client.values())})
 
 
 def contact(request):

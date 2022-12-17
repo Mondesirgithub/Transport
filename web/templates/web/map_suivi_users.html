@@ -27,7 +27,7 @@
       <!-- <div class="container-fluid"> -->
       <div class="row">
             <div class="breadcrumb_main nice_title content-center">
-               <h3>Suivi d'un chauffeur ou un livreur</h3>
+               <h3>Suivi d'un chauffeur , livreur ou client</h3>
                <img src="{% static 'web/images/breadcrumb-nice-title-one.png' %}" alt="">
             </div>
             <div class="breadcrumb_bg margin-top-70">
@@ -35,7 +35,6 @@
                   <div class="col-md-6 padding-right-0 col-sm-6">
                      <ol class="breadcrumb floatright">
                         <li><a href="{% url 'map' %}">Suivre mes propes déplacements</a></li>
-                        <li><a href="{% url 'map_suivi_users' %}">Suivre un chauffeur ou livreur</a></li>
                      </ol>
                   </div>
                </div>
@@ -50,7 +49,7 @@
    <div class="row">
       <center>
          <div class="container-fluid" style="margin-top: 50px;font-size: 20px;">
-               <div class="col-md-6">
+               <div class="col-md-4">
                   <div class="list-group">
                      <p class="list-group-item active" style="font-size: 23px;">
                         Liste des chauffeurs geolocalisables
@@ -60,7 +59,7 @@
                      {% endfor %} 
                    </div>
                </div>
-               <div class="col-md-6">
+               <div class="col-md-4">
                   <div class="list-group">
                      <p class="list-group-item active" style="font-size: 23px;">
                         Liste des livreurs geolocalisables
@@ -69,7 +68,17 @@
                      <a class="list-group-item" href="{% url 'suivi_user_livreur' livreur.pk %}">{{livreur.nom}} {{livreur.prenom}}</a>
                      {% endfor %} 
                    </div>
-            </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="list-group">
+                     <p class="list-group-item active" style="font-size: 23px;">
+                        Liste des clients geolocalisables
+                     </p>
+                     {% for client in clients %}
+                     <a class="list-group-item" href="{% url 'suivi_user_client' client.pk %}">{{client.nom}} {{client.prenom}}</a>
+                     {% endfor %} 
+                   </div>
+               </div>
       </center>
    </div>
 </section>
