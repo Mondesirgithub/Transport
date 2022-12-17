@@ -23,6 +23,8 @@ class Chauffeur(models.Model):
    adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")
    vehicule = models.ForeignKey(Vehicule, on_delete=models.CASCADE, null=True, blank=True)
    piece_jointe = models.FileField(upload_to='pieces_jointes/chauffeurs/')
+   latitude = models.FloatField(null=True, blank=True)
+   longitude = models.FloatField(null=True, blank=True)
 
    def __str__(self):
       return f"{self.nom} {self.prenom}"
@@ -37,7 +39,9 @@ class Client(models.Model):
    date_naissance = models.DateField(max_length=100, null=True, blank=True, verbose_name="Date de naissance")
    telephone = models.CharField(max_length=100, null=True, blank=True, verbose_name="Numero de telephone")
    adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse") 
-   chauffeur = models.ManyToManyField(Chauffeur, through='TransactionChauffeurClient')
+   chauffeurs = models.ManyToManyField(Chauffeur, through='TransactionChauffeurClient')
+   latitude = models.FloatField(null=True, blank=True)
+   longitude = models.FloatField(null=True, blank=True)
 
    def __str__(self):
       return f"{self.nom} {self.prenom}"
@@ -59,6 +63,8 @@ class Livreur(models.Model):
    adresse = models.CharField(max_length=100, null=True, blank=True, verbose_name="Adresse")
    clients = models.ManyToManyField(Client, through='TransactionLivreurClient')
    piece_jointe = models.FileField(upload_to='pieces_jointes/livreurs/')
+   latitude = models.FloatField(null=True, blank=True)
+   longitude = models.FloatField(null=True, blank=True)
 
    def __str__(self):
       return f"{self.nom} {self.prenom}"

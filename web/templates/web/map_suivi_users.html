@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Map{% endblock title %}
+
+{% block link %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+<script src="https://unpkg.com/htmx.org@1.8.4" integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV" crossorigin="anonymous"></script>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        width: 100%;
+        height: 100vh;
+    }
+</style>
+{% endblock link %}
+
+
+{% block content %}
+   <!-- start breadcrumb -->
+   <section class="breadcrumb_main_area">
+      <!-- <div class="container-fluid"> -->
+      <div class="row">
+            <div class="breadcrumb_main nice_title content-center">
+               <h3>Suivi d'un chauffeur ou un livreur</h3>
+               <img src="{% static 'web/images/breadcrumb-nice-title-one.png' %}" alt="">
+            </div>
+            <div class="breadcrumb_bg margin-top-70">
+               <div class="container">
+                  <div class="col-md-6 padding-right-0 col-sm-6">
+                     <ol class="breadcrumb floatright">
+                        <li><a href="{% url 'map' %}">Suivre mes propes déplacements</a></li>
+                        <li><a href="{% url 'map_suivi_users' %}">Suivre un chauffeur ou livreur</a></li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+      </div>
+      <!-- </div>  -->
+   </section>
+   <!-- end breadcrunb -->
+
+<!-- Starting Query Accordion Area -->
+<section class="query_accordion_area" id="formulaire">
+   <div class="row">
+      <center>
+         <div class="container-fluid" style="margin-top: 50px;font-size: 20px;">
+               <div class="col-md-6">
+                  <div class="list-group">
+                     <p class="list-group-item active" style="font-size: 23px;">
+                        Liste des chauffeurs geolocalisables
+                     </p>
+                     {% for chauffeur in chauffeurs %}
+                     <a class="list-group-item" href="{% url 'suivi_user_chauffeur' chauffeur.pk %}">{{chauffeur.nom}} {{chauffeur.prenom}}</a>
+                     {% endfor %} 
+                   </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="list-group">
+                     <p class="list-group-item active" style="font-size: 23px;">
+                        Liste des livreurs geolocalisables
+                     </p>
+                     {% for livreur in livreurs %}
+                     <a class="list-group-item" href="{% url 'suivi_user_livreur' livreur.pk %}">{{livreur.nom}} {{livreur.prenom}}</a>
+                     {% endfor %} 
+                   </div>
+            </div>
+      </center>
+   </div>
+</section>
+{% endblock content %}

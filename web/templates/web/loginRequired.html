@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Login-Required{% endblock title %}
+
+{% block content %}
+
+<section class="content-left">
+   <div class="container">
+      <div class="row" style="margin-top: 100px;">
+         <div class="col-md-12">
+            <div>
+               <h4 class="text-center">Vous devez vous connecter à votre compte si vous voulez voir la carte google maps</h4>
+            </div>
+         </div>
+      </div>
+      <div class="row" style="margin: 60px 0px 60px 0px;">
+         <div class="section_content">
+            <center>
+            <div class="col-md-12">
+               <div class="row" style="font-size: 20px;">
+                  <a href="{% url 'loginChauffeur' %}">Compte pour chauffeurs</a> <br /><br />
+                  <a href="{% url 'loginLivreur' %}">Compte pour livreurs</a> <br /><br />
+                  <a href="{% url 'loginClient' %}">Compte pour clients</a> <br /><br />
+               </div>
+            </div>
+         </center>
+         </div>
+      </div>
+   </div>
+</section>
+
+{% endblock content %}

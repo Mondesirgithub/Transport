@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Map{% endblock title %}
+{% block title %}Map - livreur{% endblock title %}
 
 {% block link %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
@@ -28,15 +28,15 @@
       <!-- <div class="container-fluid"> -->
       <div class="row">
             <div class="breadcrumb_main nice_title content-center">
-               <h3>Map</h3>
+               <h3>Suivi d'un livreur</h3>
                <img src="{% static 'web/images/breadcrumb-nice-title-one.png' %}" alt="">
             </div>
             <div class="breadcrumb_bg margin-top-70">
                <div class="container">
                   <div class="col-md-6 padding-right-0 col-sm-6">
                      <ol class="breadcrumb floatright">
-                        <li><a href="{% url 'map_suivi_users' %}">Suivre un chauffeur ou livreur</a></li>
                         <li><a href="{% url 'map' %}">Suivre mes propes déplacements</a></li>
+                        <li><a href="#">Calculer le trajet</a></li>
                      </ol>
                   </div>
                </div>
@@ -48,12 +48,9 @@
 
 <!-- Starting Query Accordion Area -->
 <section class="query_accordion_area" id="formulaire">
-   <form action="{% url 'map' %}">
-      {% csrf_token %}
-      <input type="text" name="latitude" id="latitude"><br>
-      <input type="text" name="longitude" id="longitude">
-   </form>
+
    <div id="map"></div>
+   
 </section>
 <!-- End Query Accordion Area -->
 {% endblock content %}
@@ -67,68 +64,38 @@
     // Map initialization 
     let map = L.map('map').setView([14.0860746, 100.608406], 1);
 
-    let reponse = confirm("Voulez que d'autres personnes vous voient ? Ok pour oui // Annuler pour non ")
+    //let reponse = confirm("Voulez que d'autres personnes vous voient ? ")
 
     //osm layer
     let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         //attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
     osm.addTo(map);
-
-    if(!navigator.geolocation) {
-        console.log("Your browser doesn't support geolocation feature!")
-    } else {
-         let marker, circle;
-         let compteur = 0;
-        setInterval(() => {
-            navigator.geolocation.getCurrentPosition(position => {
-               let {latitude, longitude, accuracy} = position.coords
-
-               if(reponse){
-                  document.getElementById('latitude').value = compteur
-                  document.getElementById('longitude').value = compteur
-               }
-
-               compteur = compteur + 1
-
-               if(latitude !== '' && longitude !== '')
-               {
-                  $.ajax({
-                     type: 'POST',
-                     url: "{% url 'map' %}",
-                     data: {
-                        latitude: $("#latitude").val(),
-                        longitude: $("#longitude").val(),
-                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
-                     },
-                     success: function(response){
-                        console.log("Success")
-                     },
-                     error: function(err){
-                        console.log("Erreur", err)
-                     }
-                  })
-               }
-
-               if(marker) {
-                   map.removeLayer(marker)
-               }
-       
-               if(circle) {
-                   map.removeLayer(circle)
-               }
-       
-               marker = L.marker([latitude, longitude])
-               circle = L.circle([latitude, longitude], {radius: accuracy})
-       
-               let featureGroup = L.featureGroup([marker, circle]).addTo(map)
-       
-               map.fitBounds(featureGroup.getBounds())
+      let marker;
+      setInterval(() => {
+         $.ajax({
+            type: 'GET',
+            url: "{% url 'getDataLivreur' livreur.pk %}",
+            success: function(response){
+               let latitude = response.livreur[0].latitude
+               let longitude = response.livreur[0].longitude   
                
-            })
-        }, 500);
-    }
+               if(marker) {
+                  map.removeLayer(marker)
+               }
 
+               marker = L.marker([latitude, longitude])
+         
+               let featureGroup = L.featureGroup([marker]).addTo(map)
+         
+               map.fitBounds(featureGroup.getBounds())
+   
+            },
+            error: function(response){
+               console.log('Erreur ' , response)
+            }
+         })
+      }, 500);
    })
 </script>
 {% endblock script %}

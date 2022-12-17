@@ -1,22 +1,88 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .models import Chauffeur, Livreur, Client
-from django.contrib import messages
 from web.forms import (ChauffeurRegisterForm,LivreurRegisterForm,
                         ClientRegisterForm, LoginForm,ChauffeurUpdateForm,
                         ChauffeurProfilForm, LivreurUpdateForm, LivreurProfilForm,
                         ClientUpdateForm, ClientProfilForm)
+from django.http import JsonResponse
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
    return render(request, "web/index.html")
 
+def loginRequired(request):
+   return render(request , "web/loginRequired.html")
 
+@login_required
 def map(request):
+   if request.method == 'POST':
+      try:
+         chauffeur = Chauffeur.objects.get(user=request.user)
+         chauffeur.latitude = float(request.POST['latitude'])
+         chauffeur.longitude = float(request.POST['longitude'])
+         chauffeur.save()
+      except:
+         try:
+            livreur = Livreur.objects.get(user=request.user)         
+            livreur.latitude = float(request.POST['latitude'])
+            livreur.longitude = float(request.POST['longitude'])
+            livreur.save()
+         except:
+            try:
+               client = Client.objects.get(user=request.user)            
+               client.latitude = float(request.POST['latitude'])
+               client.longitude = float(request.POST['longitude'])
+               client.save() 
+            except:
+               pass
+   
+
    return render(request, "web/map.html")
+
+@login_required
+def map_suivi_users(request):
+   livreurs = Livreur.objects.filter(longitude__gt=0.0).exclude(latitude=0.0, longitude=0.0)
+   chauffeurs = Chauffeur.objects.filter(longitude__gt=0.0).exclude(latitude=0.0, longitude=0.0)
+   
+   print(livreurs)
+   
+   context = {
+      'livreurs':livreurs,
+      'chauffeurs':chauffeurs
+   }
+
+   return render(request , 'web/map_suivi_users.html', context)
+
+
+@login_required
+def suivi_user_chauffeur(request, pk):
+   chauffeur = Chauffeur.objects.get(pk=pk)
+   context = {
+      'chauffeur':chauffeur
+   }
+   return render(request , 'web/suivi_user_chauffeur.html', context)
+
+
+@login_required
+def suivi_user_livreur(request, pk):   
+   livreur = Livreur.objects.get(pk=pk)
+   context = {
+      'livreur':livreur
+   }
+   return render(request , 'web/suivi_user_livreur.html', context)
+
+
+def getDataChauffeur(request, pk):
+   chauffeur = Chauffeur.objects.filter(pk=pk)
+   return JsonResponse({'chauffeur': list(chauffeur.values())})
+
 
 def contact(request):
    return render(request, "web/contact.html")
+
 
 def about(request):
    return render(request, "web/about-us.html")
@@ -29,6 +95,7 @@ def donneesFinancieres(request):
    return render(request, "web/donneesFinancieres.html")
 
 def logoutUser(request):
+   messages.info(request, 'Déconnexion réussie')
    logout(request)
    return redirect('index')
 
@@ -38,8 +105,6 @@ def registerChauffeur(request):
 
       if request.method == 'POST':
          form = ChauffeurRegisterForm(request.POST, request.FILES)      
-         print(request.POST)
-         print(request.FILES)
          if form.is_valid():
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
@@ -53,12 +118,11 @@ def registerChauffeur(request):
                piece_jointe = form.cleaned_data['piece_jointe'],
                user=user)
 
-
             request.session['nom_chauffeur'] =  chauffeur.nom
             request.session['prenom_chauffeur'] =  chauffeur.prenom
             request.session['statusChauffeur'] =  1
             login(request, user)
-
+            messages.success(request, 'Création du compte réussie 🏆')
             return redirect('index')
 
 
@@ -91,7 +155,7 @@ def registerLivreur(request):
             request.session['prenom_livreur'] =  livreur.prenom
             request.session['statusLivreur'] =  1
             login(request, user)
-
+            messages.success(request, 'Création du compte réussie 🏆')
             return redirect('index')
 
       context = {
@@ -109,6 +173,7 @@ def registerClient(request):
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
             user.save()
+            
             client = Client.objects.create(
                nom=form.cleaned_data['nom'],
                prenom = form.cleaned_data['prenom'], 
@@ -121,7 +186,7 @@ def registerClient(request):
             request.session['prenom_client'] =  client.prenom
             request.session['statusClient'] =  1
             login(request, user)
-
+            messages.success(request, 'Création du compte réussie 🏆')
             return redirect('index')
 
       context = {
@@ -144,15 +209,19 @@ def loginChauffeur(request):
 
             user = authenticate(request, username=username, password=password)
             if user is not None:
-               chauffeur = Chauffeur.objects.get(user=user)
-               login(request, user)
-               request.session['nom_chauffeur'] =  chauffeur.nom
-               request.session['prenom_chauffeur'] =  chauffeur.prenom
-               request.session['statusChauffeur'] =  1
-               return redirect('index')
+               try:
+                  chauffeur = Chauffeur.objects.get(user=user)               
+                  login(request, user)
+                  request.session['nom_chauffeur'] =  chauffeur.nom
+                  request.session['prenom_chauffeur'] =  chauffeur.prenom
+                  request.session['statusChauffeur'] =  1
+                  messages.success(request, 'Connexion réussie !!!')
+                  return redirect('index')
+               except:
+                  messages.error(request, 'aucun chauffeur trouvé, username et/ou mot de passe incorrect')
 
             else:
-               message = 'aucun chauffeur trouvé, username et/ou mot de passe incorrect'
+               messages.error(request, 'aucun chauffeur trouvé, username et/ou mot de passe incorrect')
 
       context = {
          'form':form,
@@ -174,15 +243,20 @@ def loginLivreur(request):
 
             user = authenticate(request, username=username, password=password)
             if user is not None:
-               livreur = Livreur.objects.get(user=user)
-               login(request, user)
-               request.session['nom_livreur'] =  livreur.nom
-               request.session['prenom_livreur'] =  livreur.prenom
-               request.session['statusLivreur'] =  1
-               return redirect('index')
+               try:
+                  livreur = Livreur.objects.get(user=user)
+                  login(request, user)
+                  request.session['nom_livreur'] =  livreur.nom
+                  request.session['prenom_livreur'] =  livreur.prenom
+                  request.session['statusLivreur'] =  1
+                  messages.success(request, 'Connexion réussie !!!')
+                  return redirect('index')
+               except:
+                  messages.error(request, 'aucun livreur trouvé, username et/ou mot de passe incorrect')
 
             else:
-               message = 'aucun livreur trouvé, username et/ou mot de passe incorrect'
+               messages.error(request, 'aucun livreur trouvé, username et/ou mot de passe incorrect')
+
 
       context = {
          'form':form,
@@ -202,12 +276,18 @@ def loginClient(request):
 
             user = authenticate(request, username=username, password=password)
             if user is not None:
-               client = Client.objects.get(user=user)
-               login(request, user)
-               request.session['nom_client'] =  client.nom
-               request.session['prenom_client'] =  client.prenom
-               request.session['statusClient'] =  1
-               return redirect('index')
+               try:
+                  client = Client.objects.get(user=user)
+                  login(request, user)
+                  request.session['nom_client'] =  client.nom
+                  request.session['prenom_client'] =  client.prenom
+                  request.session['statusClient'] =  1
+                  messages.success(request, 'Connexion réussie !!!')
+                  
+                  return redirect('index')
+
+               except:
+                  messages.error(request, 'aucun client trouvé, username et/ou mot de passe incorrect')
 
             else:
                message = 'aucun client trouvé, username et/ou mot de passe incorrect'
